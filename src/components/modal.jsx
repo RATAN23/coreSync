@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DatePicker } from "@nextui-org/date-picker";
 import { parseDate, getLocalTimeZone, today } from "@internationalized/date";
-import { people } from '../../public/people';
-import { statusData } from '../../public/status';
 import '../App.css'
+import { people } from '../../public/people';
+import { sections } from '../../public/sections';
 
 const Modal = ({dueDate = today(getLocalTimeZone()), title: initialTitle, assignedTo = "", status = "" , handleClose =() =>{}}) => {
   const [title, setTitle] = useState(initialTitle);
@@ -91,8 +91,8 @@ const Modal = ({dueDate = today(getLocalTimeZone()), title: initialTitle, assign
           {dropDownStatus && (
             <div className='absolute w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10'>
               <ul className='py-1'>
-               { statusData.map((val , index) => (
-                <li key={index} className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={() => {handleStatusSelection(val)}}>{val}</li>
+               { sections.map((val , index) => (
+                <li key={index} className='px-4 py-2 hover:bg-gray-100 cursor-pointer' onClick={() => {handleStatusSelection(val.title)}}>{val.title}</li>
                ))}
               </ul>
             </div>
@@ -113,8 +113,9 @@ const Modal = ({dueDate = today(getLocalTimeZone()), title: initialTitle, assign
           {dropDownNames && (
             <div className='absolute top-full left-0 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10'>
               <ul className='max-h-16 overflow-y-auto scroll-m-4 snap-mandatory drop-down-fade'>
-                {people.map((val, index) => (
-                  <li key={index} onClick={() => {handleNameSelection(val)}} className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>{val}</li>
+                {people.map((val) => (
+                  
+                  <li key={val.id} onClick={() => {handleNameSelection(val.name)}} className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>{val.name}</li>
                 ))}
               </ul>
             </div>
