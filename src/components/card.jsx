@@ -1,30 +1,30 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { User } from 'lucide-react';
-import { useRef , useState } from 'react';
-import Modal from './modal';
-import { parseDate} from "@internationalized/date";
 
-const Card = ({title = "Hello" , assignedTo = "Ratan" , dueDate = "" , onClick = () => {}}) => {
- 
+const Card = ({title = "" , assignedTo = "" , dueDate = "" , onClick = () => {} , priority = ""}) => {
   const handleClick = () => {
     onClick();
   }
 
   return (
-      <div className="" onClick={handleClick}>
-      <div className="w-[200px] h-[150px] md:w-[150px] md:h-[140px] lg:w-[200px] lg:h-[150px]  xl:w-[250px] relative border-2 border-black/40 flex flex-col rounded-2xl ">
-        <span className="text-lg md:text-xl lg:text-2xl p-2 text-pretty overflow-auto max-h-[6rem]">{title} </span>
-        <div className="p-2">
-          <label className="text-xl mr-2">Due:</label>
-          <span>{dueDate.toString()}</span>
-        </div>
-        <div className="mt-auto ml-auto m-2   flex justify-center items-center">
-          <span className="text-xl mr-2">{assignedTo}</span>
-          <User size={25}/>
+    <div onClick={handleClick} className="mb-4">
+      <div className="w-[250px] bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+        <span style={{backgroundColor :  priority === "low" ? "#7cfc00" : 
+      priority === "medium" ? "#ff9913" : 
+      priority === "high" ? "#ff2800" : ""}} 
+      className='ml-3 px-2  rounded-md text-sm font-semibold'>{priority}</span>
+        <div className="m-2 flex flex-col h-full">
+          <h3 className="text-lg font-medium mb-2 line-clamp-2">{title}</h3>
+          <div className="text-sm text-gray-600 mb-2">
+            <span className="font-semibold">Due:</span> {dueDate.toString()}
+          </div>
+          <div className="mt-auto flex justify-end items-center">
+            <span className="text-sm mr-2 rounded-lg">{assignedTo}</span>
+            <User size={30} className="text-gray-500 border-2 rounded-full border-gray-400" />
+          </div>
         </div>
       </div>
     </div>
-   
   )
 }
 

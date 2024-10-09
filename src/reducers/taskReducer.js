@@ -6,6 +6,7 @@ const initialState = {
         {
           id: 1,
           title: "Design Kanban UI",
+          priority : "low",
           assignedTo: "Ratan",
           dueDate: "2024-09-20",
           status: "Planning",
@@ -13,6 +14,7 @@ const initialState = {
         {
           id: 2,
           title: "Implement Task Modal",
+          priority : "low",
           assignedTo: "Jarvis",
           dueDate: "2024-08-21",
           status: "Completed",
@@ -20,6 +22,7 @@ const initialState = {
         {
           id: 3,
           title: "Implement Task Modal 1",
+          priority : "medium",
           assignedTo: "John",
           dueDate: "2024-09-24",
           status: "Started",
@@ -27,6 +30,7 @@ const initialState = {
         {
           id: 4,
           title: "Implement Task Modal 2",
+          priority : "high",
           assignedTo: "Johnny",
           dueDate: "2024-09-01",
           status: "Completed",
@@ -34,6 +38,7 @@ const initialState = {
         {
           id: 5,
           title: "Implement Task Modal 3",
+          priority : "low",
           assignedTo: "Josh",
           dueDate: "2024-07-11",
           status: "Planning",
@@ -46,14 +51,19 @@ const taskSlicer = createSlice({
     initialState ,
     reducers : {
         addTask : (state, action) => {
+            console.log(action.payload);
             state.tasks.push(action.payload);
         },
         updateTask : (state , action) => {
-            const { id , updatedTask} = action.payload;
-            const taskIndex = state.tasks.filter((task) => task.id )
-            if(taskIndex){
-                state.tasks[taskIndex] = {...state.tasks[taskIndex] , ...updatedTask};
+            const { id , ...updatedTaskData} = action.payload;
+            const taskIndex = state.tasks.findIndex((task) => task.id == id);
+            if(state.tasks[taskIndex]){
+              state.tasks[taskIndex] = {
+                ...state.tasks[taskIndex],
+                ...updatedTaskData
+              }
             }
+           
         },
         removeTask : (state , action) => {
             state.tasks = state.filter((task)=> task.id != action.payload.id);
